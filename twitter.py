@@ -1,32 +1,35 @@
 #!/usr/bin/python
 
 ''' 
-A script that downloads all the pictures posted by a given user.
+Jeffrey Leong
+
+A script that downloads all the pictures posted by a given user and creates a video.
 Adapted from Krishanu Konar.
 '''
 
 import json
 from tweepy import OAuthHandler, API, Stream
-import os
+from google.cloud import vision
+import io, os
 import wget
 import sys
 import requests
+import glob
 
 
 def main():
 	#Authentication, enter keys
-	CONSUMER_KEY = "guLZFthXS6Pdwut5nUnpGf6hk"
-	CONSUMER_SECRET = "pN12roFkaX3CphLOvTquc14yPDBK9WJ7ePXPz4U3qZra96UH9D"
-	ACCESS_TOKEN = "557327852-Zfm38pkBthBM2sotwRJp8pbbBQTQ2RaZg0tb1Zen"
-	ACCESS_TOKEN_SECRET = "Fl5N2FttpN4LDym09Ljg0bPWv8PrzvRoBqNsSgsYI6jBU"
+	CONSUMER_KEY = "INSERT YOUR OWN KEY"
+	CONSUMER_SECRET = "INSERT YOUR OWN KEY"
+	ACCESS_TOKEN = "INSERT YOUR OWN KEY"
+	ACCESS_TOKEN_SECRET = "INSERT YOUR OWN KEY"
 
 	auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 	auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET)
 	api = API(auth)
 
-#	api = authenticate()
-	print '\n\nTwitter Image Downloader:\n========================\n'
-	username = 'realDonaldTrump'
+	print '\nTwitter Image Downloader:\n========================'
+	username = 'katyperry'
 	max_tweets = 200
 	
 	all_tweets = getTweetsFromUser(username,max_tweets,api)
@@ -34,6 +37,9 @@ def main():
 	
 	downloadFiles(media_URLs,username)
 	print '\n\nFinished Downloading.\n'
+	changeFileName(username)
+	convertToVideo()
+	labelVideo()
 
 def getTweetsFromUser(username,max_tweets,api):
 	## Fetches Tweets from user with the handle 'username' upto max of 'max_tweets' tweets
@@ -95,6 +101,37 @@ def downloadFiles(media_url,username):
 
 	for url in media_url:
 		wget.download(url)
+
+#changes file names of downloaded in order to easily concatenate using ffmpeg		
+def changeFileName(username):
+	os.system('j=1; for i in *.jpg; do mv "$i" file"$j".jpg; let j=j+1;done')
+	print 'file names changed'
+
+#concatenates pictures into a video
+def convertToVideo():
+	os.system("ffmpeg -framerate .5 -pattern_type glob -i '*.jpg' out.mp4")
+	print 'video created'
+
+def labelVideo():
+	labels_dict = {}
+	path = glob.glob('*.jpg')
+	client = vision.ImageAnnotatorClient()
+	count = 0
+
+	for img in path:
+		with io.open(img, 'rb') as image_file:
+			content = image_file.read()
+
+		image = vision.types.Image(content=content)
+		response = client.label_detection(image=image)
+		labels = response.label_annotations
+		labels_dict[count] = []
+
+		for label in labels:
+			labels_dict[count].append(label.description)
+		count += 1
+
+	print(labels_dict)
 
 if __name__ == '__main__':
 	main()
