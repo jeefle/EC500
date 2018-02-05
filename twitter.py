@@ -78,6 +78,7 @@ def getTweetMediaURL(all_tweets):
 
 	return tweets_with_media
 
+#creates new folder and downloads
 def downloadFiles(media_url,username):
 	print '\nDownloading Images.....'
 	try:
@@ -94,15 +95,6 @@ def downloadFiles(media_url,username):
 
 	for url in media_url:
 		wget.download(url)
-
-
-#def authenticate():
-#	''' Authenticate the use of twitter API '''
-#	auth = OAuthHandler(t.CONSUMER_KEY, t.CONSUMER_SECRET)
-#	auth.set_access_token(t.ACCESS_TOKEN,t.ACCESS_TOKEN_SECRET)
-#	api = API(auth)
-#	return api
-
 
 if __name__ == '__main__':
 	main()
