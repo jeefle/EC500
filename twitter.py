@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
 ''' 
-A script that downloads all the pictures posted by a given user.
+Jeffrey Leong
+
+A script that downloads all the pictures posted by a given user and creates a video.
 Adapted from Krishanu Konar.
 '''
 
@@ -24,9 +26,8 @@ def main():
 	auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET)
 	api = API(auth)
 
-#	api = authenticate()
-	print '\n\nTwitter Image Downloader:\n========================\n'
-	username = 'realDonaldTrump'
+	print '\nTwitter Image Downloader:\n========================'
+	username = 'katyperry'
 	max_tweets = 200
 	
 	all_tweets = getTweetsFromUser(username,max_tweets,api)
@@ -35,6 +36,7 @@ def main():
 	downloadFiles(media_URLs,username)
 	print '\n\nFinished Downloading.\n'
 	changeFileName(username)
+	convertToVideo()
 
 def getTweetsFromUser(username,max_tweets,api):
 	## Fetches Tweets from user with the handle 'username' upto max of 'max_tweets' tweets
@@ -100,11 +102,12 @@ def downloadFiles(media_url,username):
 #changes file names of downloaded in order to easily concatenate using ffmpeg		
 def changeFileName(username):
 	os.system('j=1; for i in *.jpg; do mv "$i" file"$j".jpg; let j=j+1;done')
+	print 'file names changed'
 
-'''
 #concatenates pictures into a video
 def convertToVideo():
-	os.system('ffmpeg -loop 1 -i [INPUT FILENAME] -c:a libfdk_aac -ar 44100 -ac 2 -vf "scale='if(gt(a,16/9),1280,-1)':'if(gt(a,16/9),-1,720)', pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -b:v 10M -pix_fmt yuv420p -r 30 -shortest -avoid_negative_ts make_zero -fflags +genpts -t 1 OUTPUTFILENAME.mp4')
-'''
+	os.system("ffmpeg -framerate .5 -pattern_type glob -i '*.jpg' out.mp4")
+	print 'video created'
+
 if __name__ == '__main__':
 	main()
