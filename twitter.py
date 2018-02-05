@@ -2,11 +2,9 @@
 
 ''' 
 A script that downloads all the pictures posted by a given user.
-Author: Krishanu Konar
-email: krishh_konar
+Adapted from Krishanu Konar.
 '''
 
-import API_Tokens as t
 import json
 from tweepy import OAuthHandler, API, Stream
 import os
