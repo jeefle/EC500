@@ -2,11 +2,9 @@
 
 ''' 
 A script that downloads all the pictures posted by a given user.
-Author: Krishanu Konar
-email: krishh_konar
+Adapted from Krishanu Konar.
 '''
 
-import API_Tokens as t
 import json
 from tweepy import OAuthHandler, API, Stream
 import os
@@ -36,6 +34,7 @@ def main():
 	
 	downloadFiles(media_URLs,username)
 	print '\n\nFinished Downloading.\n'
+	changeFileName(username)
 
 def getTweetsFromUser(username,max_tweets,api):
 	## Fetches Tweets from user with the handle 'username' upto max of 'max_tweets' tweets
@@ -80,6 +79,7 @@ def getTweetMediaURL(all_tweets):
 
 	return tweets_with_media
 
+#creates new folder and downloads
 def downloadFiles(media_url,username):
 	print '\nDownloading Images.....'
 	try:
@@ -97,14 +97,14 @@ def downloadFiles(media_url,username):
 	for url in media_url:
 		wget.download(url)
 
+#changes file names of downloaded in order to easily concatenate using ffmpeg		
+def changeFileName(username):
+	os.system('j=1; for i in *.jpg; do mv "$i" file"$j".jpg; let j=j+1;done')
 
-#def authenticate():
-#	''' Authenticate the use of twitter API '''
-#	auth = OAuthHandler(t.CONSUMER_KEY, t.CONSUMER_SECRET)
-#	auth.set_access_token(t.ACCESS_TOKEN,t.ACCESS_TOKEN_SECRET)
-#	api = API(auth)
-#	return api
-
-
+'''
+#concatenates pictures into a video
+def convertToVideo():
+	os.system('ffmpeg -loop 1 -i [INPUT FILENAME] -c:a libfdk_aac -ar 44100 -ac 2 -vf "scale='if(gt(a,16/9),1280,-1)':'if(gt(a,16/9),-1,720)', pad=1280:720:(ow-iw)/2:(oh-ih)/2" -c:v libx264 -b:v 10M -pix_fmt yuv420p -r 30 -shortest -avoid_negative_ts make_zero -fflags +genpts -t 1 OUTPUTFILENAME.mp4')
+'''
 if __name__ == '__main__':
 	main()
