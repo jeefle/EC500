@@ -9,37 +9,27 @@ Adapted from Krishanu Konar.
 
 import json
 from tweepy import OAuthHandler, API, Stream
-from google.cloud import vision
 import io, os
 import wget
 import sys
 import requests
 import glob
 
-
-def main():
+def downloadTweets(username, CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET):
 	#Authentication, enter keys
-	CONSUMER_KEY = "INSERT YOUR OWN KEY"
-	CONSUMER_SECRET = "INSERT YOUR OWN KEY"
-	ACCESS_TOKEN = "INSERT YOUR OWN KEY"
-	ACCESS_TOKEN_SECRET = "INSERT YOUR OWN KEY"
-
 	auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 	auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET)
 	api = API(auth)
 
 	print '\nTwitter Image Downloader:\n========================'
-	username = 'katyperry'
 	max_tweets = 200
+	username = username
 	
 	all_tweets = getTweetsFromUser(username,max_tweets,api)
 	media_URLs = getTweetMediaURL(all_tweets)
-	
 	downloadFiles(media_URLs,username)
+
 	print '\n\nFinished Downloading.\n'
-	changeFileName(username)
-	convertToVideo()
-	labelVideo()
 
 def getTweetsFromUser(username,max_tweets,api):
 	## Fetches Tweets from user with the handle 'username' upto max of 'max_tweets' tweets
@@ -102,36 +92,8 @@ def downloadFiles(media_url,username):
 	for url in media_url:
 		wget.download(url)
 
-#changes file names of downloaded in order to easily concatenate using ffmpeg		
-def changeFileName(username):
-	os.system('j=1; for i in *.jpg; do mv "$i" file"$j".jpg; let j=j+1;done')
-	print 'file names changed'
+#def main():
+#	downloadTweets("katyperry", "guLZFthXS6Pdwut5nUnpGf6hk", "pN12roFkaX3CphLOvTquc14yPDBK9WJ7ePXPz4U3qZra96UH9D", "557327852-Zfm38pkBthBM2sotwRJp8pbbBQTQ2RaZg0tb1Zen", "Fl5N2FttpN4LDym09Ljg0bPWv8PrzvRoBqNsSgsYI6jBU")
 
-#concatenates pictures into a video
-def convertToVideo():
-	os.system("ffmpeg -framerate .5 -pattern_type glob -i '*.jpg' out.mp4")
-	print 'video created'
-
-def labelVideo():
-	labels_dict = {}
-	path = glob.glob('*.jpg')
-	client = vision.ImageAnnotatorClient()
-	count = 0
-
-	for img in path:
-		with io.open(img, 'rb') as image_file:
-			content = image_file.read()
-
-		image = vision.types.Image(content=content)
-		response = client.label_detection(image=image)
-		labels = response.label_annotations
-		labels_dict[count] = []
-
-		for label in labels:
-			labels_dict[count].append(label.description)
-		count += 1
-
-	print(labels_dict)
-
-if __name__ == '__main__':
-	main()
+#if __name__ == '__main__':
+#	main()
