@@ -28,6 +28,7 @@ def labelVideo():
 
 		x = 0
 
+		# prints the first label aka the most relevent label
 		for label in labels:
 			if (x == 0):
 				x = x + 1
