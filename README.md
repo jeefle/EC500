@@ -7,17 +7,8 @@ using ffmpeg into a video. Finally, you will receive command line outputs and an
   Make sure all the proper packages are downloaded including:
   ```
   pip
-  sudo easy_install pip
-  ```
-  ```
   homebrew
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  ```
-  ```
   wget
-  brew install wget 
-  ```
-  ```
   tweepy
   google-cloud
   ffmpeg
