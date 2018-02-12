@@ -18,3 +18,7 @@ using ffmpeg into a video. Finally, you will receive command line outputs and an
   *Note: Set up Google Cloud credentials as a global variable*
   
   To use in program, insert a twitter handle and credentials.
+
+
+### TODO
+  Error handling: No images, invalid twitter handles
