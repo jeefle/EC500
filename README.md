@@ -17,7 +17,9 @@ using ffmpeg into a video. Finally, you will receive command line outputs and an
 ### Running instructions
   *Note: Set up Google Cloud credentials as a global variable*
   
-  To use in program, insert a twitter handle and credentials.
+  To use in program, insert a twitter handle and twitter API credentials. 
+  
+  downloadconvert.py is the final API. After downloading all prerequisites, make sure to download labelvideo.py, makevid.py, and  twitter.py as they are dependencies for downloadconvert.py. 
 
 
 ### TODO
