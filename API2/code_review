@@ -38,3 +38,5 @@ Slow at beginning when looking at username.
 Other Issues: 
 
 Code works only on python 3.x. Using Python 2.x causes NameError. input function is the cause of error.
+Font file necessary but not provided.
+Width not divisible by 2 error. (FFMPEG needs photo dimensions to be resized to be even pixels)
