@@ -1,0 +1,40 @@
+Code Review: Hayato Nakamura
+By Jeffrey Leong
+
+https://github.com/hayatonakamura/EC500_C1/tree/master/API
+
+Data Path:
+
+Access keys authorizing
+User input of twitter name
+Check to see if username is real, otherwise prints "Invalid Username"
+Looks through last 200 tweets and finds full path of image
+Downloads 10 images to specific directory (set by user)
+Google cloud vision finds picture tags and PIL writes on the images (creating new and deleting old images)
+Labels are concurrently printed to command line
+FFMPEG gets all images and converts to video
+Old images deleted from directory
+
+API Calls:
+
+twitter API call for finding tweets (using tweepy)
+Google Cloud Vision to tag images
+
+Both API's are implemented properly and allow and satisfies requirement. Note that both API's require developer keys to use.
+
+Code Convention/Readability:
+
+Code is segmented into decently readable sections. Will be easier to read if functions were used along with possibly more efficient. 
+Otherwise program is reading from line to line. This would make it hard to debug in the future. Generally comments are helpful in certain 
+more confusing areas, summarizing areas with lots of counters and actions. Certain variables can be more descriptive. i.e. newcommand.
+
+Might not want to keep having user defined inputs in terminal. May be easier just to create a function where user can add those inputs necessary as parameters.
+Error Handling:
+
+Performance:
+
+Slow at beginning when looking at username. 
+
+Other Issues: 
+
+Code works only on python 3.x. Using Python 2.x causes NameError. input function is the cause of error.
