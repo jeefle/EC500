@@ -33,7 +33,7 @@ Error Handling:
 
 Performance:
 
-Slow at beginning when looking at username. 
+Slow at beginning when looking at username because of user input delay. 
 
 Other Issues: 
 
