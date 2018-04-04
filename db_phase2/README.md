@@ -11,7 +11,7 @@ export GOOGLE_APPLICATION_CREDENTIALS=PATH_TO_KEY_FILE
 - pymongo 
 - python 3
 
-### Database Structure
+### Database
 This program takes the last 50 tweets in a twitter feed, finds the images and then generates keywords to describe the image.
 
 The database is structured as seen below with fields for handle (user input), keyword, number of images in a feed, and logs of when the data was inserted.
