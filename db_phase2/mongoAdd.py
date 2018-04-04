@@ -30,7 +30,7 @@ for i in range(0, 20):
         'handle': handles[i],
         'keyword': keywords,
         'num_images': num_image,
-        'created': datetime.datetime.now()
+        'time': datetime.datetime.now()
     }
     
     result = collection.insert_one(data)
