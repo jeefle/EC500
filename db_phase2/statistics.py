@@ -7,21 +7,20 @@ client = MongoClient()
 client = MongoClient('localhost', 27017)
 db = client['twitter_db']
 
-"""
 # prints entire db 
 cursor = db.tweet_collection.find({})
 for item in cursor: 
     pprint(item)
+    print " "
 
-"""
-"""
+
 # find users that have a specific keyword
-search = "girl"
-cursor = db.tweet_collection.find({"keyword": search})
-print "Search Word:", search
+keyword = "girl"
+cursor = db.tweet_collection.find({"keyword": keyword})
+print "Search for Word:", keyword
 for item in cursor:
     pprint(item["handle"])
-"""
+print " "
 
 
 # Finds the 10 most popular keywords across all twitter handles
@@ -49,6 +48,3 @@ for x, y in common_word_count:
         for document in cursor:
             pprint(document["handle"])
         print " "
-
-
-
