@@ -33,4 +33,5 @@ In any relational data set, SQL will be a better fit. It provides structure to t
 e.g 
 
 UserID -> webpage2 -> log1
+
 UserID -> webpage1 -> form1
