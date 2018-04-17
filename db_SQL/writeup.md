@@ -31,6 +31,6 @@ benefit from MongoDB.
 In any relational data set, SQL will be a better fit. It provides structure to the data and a clear relational format.
 
 e.g 
-       -> webpage1 -> form1
+
 UserID -> webpage2 -> log1
-       -> webpage3 -> datausage1
+UserID -> webpage1 -> form1
